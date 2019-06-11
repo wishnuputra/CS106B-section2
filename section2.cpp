@@ -10,6 +10,7 @@
 #include "map.h"
 #include "simpio.h"
 #include "filelib.h"
+#include "stack.h"
 using namespace std;
 
 void twiceTest();
@@ -38,16 +39,28 @@ string reverseString(string s);
 void starStringTest();
 string starString(int n);
 
+void isSubsequenceTest();
+bool isSubsequence(string s1, string s2);
+
+void doubleStackTest();
+void doubleStack(Stack<int> &stack);
+
+void zigzagTest();
+void zigzag(int n);
 
 int main() {
-    twiceTest();
-    unionSetsTest();
-    rarestTest();
-    friendListTest();
-    reverseMapTest();
-    sumOfSquaresTest();
-    reverseStringTest();
-    starStringTest();
+//    twiceTest();
+//    unionSetsTest();
+//    rarestTest();
+//    friendListTest();
+//    reverseMapTest();
+//    sumOfSquaresTest();
+//    reverseStringTest();
+//    starStringTest();
+//    isSubsequenceTest();
+//    doubleStackTest();
+    zigzagTest();
+
     return 0;
 }
 
@@ -238,5 +251,63 @@ string starString(int n) {
         return "*";
     } else {
         return starString(n - 1) + starString(n - 1);
+    }
+}
+
+void isSubsequenceTest() {
+    string s1 = "computer";
+    string s2 = "cope";
+    cout << "isSubsequence: " << isSubsequence(s1, s2) << endl;
+}
+
+bool isSubsequence(string big, string small) {
+    if (small == "") {
+        return true;
+    } else if (big == "") {
+        return false;
+    } else {
+        string bigRemain = big.substr(1);
+        string smallRemain = small.substr(1);
+        if (big[0] == small[0]) {
+            return isSubsequence(bigRemain, smallRemain);
+        } else {
+            return isSubsequence(bigRemain, small);
+        }
+    }
+}
+
+void doubleStackTest() {
+    Stack<int> s {1, 2, 3};
+    doubleStack(s);
+    cout << "doubleStack: " << s << endl;
+}
+
+void doubleStack(Stack<int> &stack) {
+    if (stack.isEmpty()) {
+
+    } else {
+        int n = stack.pop();
+        doubleStack(stack);
+        stack.push(n);
+        stack.push(n);
+    }
+}
+
+void zigzagTest() {
+    int n = 7;
+    cout << "zizagTest(" << n << "): ";
+    zigzag(n);
+    cout << endl;
+}
+
+void zigzag(int n) {
+    if (n <= 1) {
+        cout << "*";
+    } else if (n == 2) {
+        cout << "**";
+    } else {
+        cout << "<";
+        zigzag(n - 2);
+        cout << ">";
     }
 }
